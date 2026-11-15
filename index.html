@@ -1,0 +1,2166 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>중학교 1학년 기술·가정 2학기 내용정리</title>
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Google Fonts: Noto Sans KR -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Noto Sans KR"', 'sans-serif'],
+          },
+          colors: {
+            skyBg: '#CBEBFA',
+            roadBlue: '#9AD7F7',
+            roadArrow: '#5EB6E4',
+            emeraldMain: '#12A863',
+            emeraldSoft: '#E8F8F0',
+            charcoal: '#1E293B',
+          }
+        }
+      }
+    };
+  </script>
+
+  <style>
+    /* 기본 폰트 및 스크롤 설정 */
+    body {
+      font-family: 'Noto Sans KR', sans-serif;
+      background-color: #CBEBFA;
+      color: #1E293B;
+      overflow-x: hidden;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    /* 교과서 유기적 둥근 말풍선/조약돌 카드 형태 */
+    .blob-card-v {
+      background: #FFFFFF;
+      border-radius: 46% 54% 52% 48% / 44% 48% 52% 56%;
+      box-shadow: 0 14px 34px -10px rgba(32, 95, 138, 0.14), 0 4px 12px rgba(255, 255, 255, 0.7) inset;
+      transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.35s ease;
+    }
+
+    .blob-card-iv {
+      background: #FFFFFF;
+      border-radius: 48% 52% 47% 53% / 45% 44% 56% 55%;
+      box-shadow: 0 14px 34px -10px rgba(32, 95, 138, 0.14), 0 4px 12px rgba(255, 255, 255, 0.7) inset;
+      transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.35s ease;
+    }
+
+    .blob-card-vi {
+      background: #FFFFFF;
+      border-radius: 45% 55% 50% 50% / 48% 46% 54% 52%;
+      box-shadow: 0 14px 34px -10px rgba(32, 95, 138, 0.14), 0 4px 12px rgba(255, 255, 255, 0.7) inset;
+      transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.35s ease;
+    }
+
+    @media (hover: hover) {
+      .blob-card-v:hover,
+      .blob-card-iv:hover,
+      .blob-card-vi:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 20px 40px -12px rgba(24, 88, 132, 0.2);
+      }
+    }
+
+    /* 소단원 버튼 호버 효과 */
+    .subchapter-btn {
+      transition: all 0.22s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .subchapter-btn:hover {
+      background-color: #E8F8F0;
+      transform: translateX(4px);
+    }
+    .subchapter-btn .learn-hint {
+      opacity: 0;
+      transform: translateX(-4px);
+      transition: all 0.2s ease;
+    }
+    .subchapter-btn:hover .learn-hint {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    /* 일러스트 은은한 생동감 애니메이션 */
+    @keyframes floatSlow {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-5px); }
+    }
+    @keyframes jumpHappy {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-6px) rotate(1.5deg); }
+    }
+    @keyframes pulseWave {
+      0%, 100% { opacity: 0.95; transform: scale(1); }
+      50% { opacity: 0.55; transform: scale(0.96); }
+    }
+
+    .anim-float {
+      animation: floatSlow 3.8s ease-in-out infinite;
+    }
+    .anim-jump {
+      animation: jumpHappy 2.6s ease-in-out infinite;
+    }
+    .anim-wave {
+      animation: pulseWave 2s ease-in-out infinite;
+      transform-origin: center;
+    }
+
+    /* 화면 전환 페이드인 */
+    @keyframes fadeSlideUp {
+      from {
+        opacity: 0;
+        transform: translateY(12px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    .view-enter {
+      animation: fadeSlideUp 0.32s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+
+    /* 깔끔한 커스텀 스크롤바 */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #CBEBFA;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #8CC8E8;
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #67B4DE;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col selection:bg-emerald-200 selection:text-emerald-950">
+
+  <!-- 상단 유틸리티 헤더 (검색, 백업, 복원, 초기화) -->
+  <header class="sticky top-0 z-40 bg-[#CBEBFA]/90 backdrop-blur-md border-b border-sky-200/80">
+    <div class="max-w-5xl mx-auto px-3 sm:px-6 h-14 flex items-center justify-between gap-2">
+      <!-- 좌측 타이틀 로고 (클릭 시 목차 지도로 이동) -->
+      <button
+        type="button"
+        onclick="navigateToMap()"
+        class="flex items-center gap-2 text-left group focus:outline-none"
+        title="목차 지도로 이동"
+      >
+        <span class="w-8 h-8 rounded-xl bg-[#12A863] text-white font-extrabold text-sm flex items-center justify-center shadow-sm group-hover:scale-105 transition-transform">
+          기·가
+        </span>
+        <div>
+          <span class="font-extrabold text-slate-800 text-sm sm:text-base tracking-tight block leading-tight">
+            중1 기술·가정 <span class="text-[#12A863]">2학기</span> 내용정리
+          </span>
+          <span class="text-[11px] text-slate-500 hidden sm:block leading-none mt-0.5">
+            단원을 클릭하여 핵심 정리를 확인하고 나만의 노트를 추가하세요
+          </span>
+        </div>
+      </button>
+
+      <!-- 우측 도구 모음 -->
+      <div class="flex items-center gap-1.5 sm:gap-2">
+        <!-- 전체 내용 검색 버튼 -->
+        <button
+          type="button"
+          onclick="openSearchModal()"
+          class="px-2.5 sm:px-3 py-1.5 rounded-xl bg-white/90 hover:bg-white text-slate-700 text-xs sm:text-sm font-semibold shadow-sm border border-sky-200/80 flex items-center gap-1.5 transition"
+          title="모든 소단원 내용 검색"
+        >
+          <svg class="w-4 h-4 text-[#12A863]" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+            <circle cx="11" cy="11" r="7"></circle>
+            <path stroke-linecap="round" d="M20 20l-3.5-3.5"></path>
+          </svg>
+          <span class="hidden sm:inline">정리 검색</span>
+        </button>
+
+        <!-- 데이터 관리 드롭다운/버튼 그룹 -->
+        <div class="relative">
+          <button
+            type="button"
+            id="data-menu-btn"
+            onclick="toggleDataMenu()"
+            class="px-2.5 sm:px-3 py-1.5 rounded-xl bg-white/90 hover:bg-white text-slate-700 text-xs sm:text-sm font-semibold shadow-sm border border-sky-200/80 flex items-center gap-1.5 transition"
+          >
+            <svg class="w-4 h-4 text-sky-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M4 7v10c0 2 1 3 3 3h10c2 0 3-1 3-3V7M16 3H8L6 7h12l-2-4z" />
+            </svg>
+            <span>백업·관리</span>
+          </button>
+
+          <!-- 백업/불러오기/초기화 팝오버 메뉴 -->
+          <div
+            id="data-menu-popover"
+            class="hidden absolute right-0 mt-2 w-52 bg-white rounded-2xl shadow-xl border border-slate-100 py-2 z-50"
+          >
+            <div class="px-3.5 py-1.5 text-[11px] font-bold text-slate-400">
+              내 정리 노트 데이터 관리
+            </div>
+            <button
+              type="button"
+              onclick="exportNotesJSON(); toggleDataMenu(false);"
+              class="w-full px-3.5 py-2.5 text-left text-sm text-slate-700 hover:bg-emerald-50 hover:text-emerald-700 flex items-center gap-2.5 font-medium transition"
+            >
+              <span>💾</span>
+              <span>백업 저장 (JSON)</span>
+            </button>
+            <button
+              type="button"
+              onclick="triggerImportJSON(); toggleDataMenu(false);"
+              class="w-full px-3.5 py-2.5 text-left text-sm text-slate-700 hover:bg-sky-50 hover:text-sky-700 flex items-center gap-2.5 font-medium transition"
+            >
+              <span>📂</span>
+              <span>백업 불러오기</span>
+            </button>
+            <div class="my-1 border-t border-slate-100"></div>
+            <button
+              type="button"
+              onclick="openResetModal(); toggleDataMenu(false);"
+              class="w-full px-3.5 py-2.5 text-left text-sm text-rose-600 hover:bg-rose-50 flex items-center gap-2.5 font-medium transition"
+            >
+              <span>↺</span>
+              <span>기본값 초기화</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- 숨겨진 JSON 파일 업로드 인풋 -->
+  <input type="file" id="import-json-input" accept=".json,application/json" class="hidden" onchange="handleImportJSON(event)" />
+
+  <!-- ===================================================================== -->
+  <!-- VIEW 1: 메인 교과서 목차 지도 화면 (Textbook Map View)                  -->
+  <!-- ===================================================================== -->
+  <main id="map-view" class="flex-1 w-full view-enter">
+
+    <!-- [데스크톱 및 태블릿 뷰: md 이상] 첨부 이미지의 비율과 배치를 그대로 재현 -->
+    <div class="hidden md:block w-full max-w-[920px] mx-auto px-4 py-6">
+      <div class="relative w-full aspect-[920/1130] select-none">
+
+        <!-- 전체 배경 구불구불한 하늘색 길 & 화살표 & 새싹 SVG -->
+        <svg viewBox="0 0 920 1130" class="w-full h-full pointer-events-none" aria-hidden="true">
+          <!-- 하단 지면/도로 밴드 (자율주행차, VI 단원, 도착 캐릭터 뒤) -->
+          <path
+            d="M -20 960 Q 250 935 500 950 T 940 945 L 940 1015 Q 500 1020 250 1005 T -20 1025 Z"
+            fill="#9AD7F7"
+          />
+
+          <!-- 좌측 하단에서 올라와 IV 뒤를 지나 중앙 우측 고리(Loop)를 만들고 우측으로 뻗는 구불구불한 길 -->
+          <path
+            d="M -30 930
+               C 90 860, 175 745, 240 645
+               C 295 560, 385 555, 495 558
+               C 610 562, 710 510, 712 435
+               C 714 360, 645 335, 595 365
+               C 545 395, 540 475, 605 525
+               C 670 575, 795 565, 950 515"
+            fill="none"
+            stroke="#9AD7F7"
+            stroke-width="62"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+
+          <!-- 길 위의 방향 화살표 1 (좌측 하단 오르막길) -->
+          <g transform="translate(128, 782) rotate(-46)">
+            <path d="M -8 -11 L 6 0 L -8 11" fill="none" stroke="#5EB6E4" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round" />
+          </g>
+
+          <!-- 길 위의 방향 화살표 2 (IV 단원 오른쪽 출구) -->
+          <g transform="translate(476, 558) rotate(2)">
+            <path d="M -8 -11 L 6 0 L -8 11" fill="none" stroke="#5EB6E4" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round" />
+          </g>
+
+          <!-- 길 위의 방향 화살표 3 (중앙 고리 안쪽) -->
+          <g transform="translate(625, 516) rotate(22)">
+            <path d="M -8 -11 L 6 0 L -8 11" fill="none" stroke="#5EB6E4" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round" />
+          </g>
+
+          <!-- 우측 길 위에 자라난 귀여운 초록 새싹 -->
+          <g transform="translate(766, 518)">
+            <!-- 줄기 -->
+            <path d="M 0 0 L 0 -24" stroke="#2D7A5E" stroke-width="4.5" stroke-linecap="round" />
+            <!-- 왼쪽 잎 -->
+            <path d="M 0 -22 C -12 -34, -30 -32, -30 -20 C -30 -10, -12 -12, 0 -20 Z" fill="#46A684" />
+            <path d="M -3 -21 L -21 -22" stroke="#2D7A5E" stroke-width="2" stroke-linecap="round" />
+            <!-- 오른쪽 잎 -->
+            <path d="M 0 -22 C 12 -34, 30 -32, 30 -20 C 30 -10, 12 -12, 0 -20 Z" fill="#3B9675" />
+            <path d="M 3 -21 L 21 -22" stroke="#2D7A5E" stroke-width="2" stroke-linecap="round" />
+          </g>
+        </svg>
+
+        <!-- =============================================================== -->
+        <!-- 카드 1 (우측 상단): Ⅴ 재료와 제조                                -->
+        <!-- =============================================================== -->
+        <section
+          aria-label="5단원 재료와 제조"
+          style="top: 10.2%; right: 8.5%; width: 41.5%;"
+          class="absolute blob-card-v px-9 py-10 z-10"
+        >
+          <!-- 우측 상단 일러스트: 나무 판자를 든 목수 + 나무 스툴 + 망치 -->
+          <div class="absolute -top-[22%] -right-[14%] w-[68%] pointer-events-none">
+            <svg viewBox="0 0 260 190" class="w-full h-auto overflow-visible">
+              <!-- 나무 스툴 (우측 상단) -->
+              <g transform="translate(178, 16)">
+                <rect x="10" y="16" width="6" height="44" rx="2" fill="#B5743E" />
+                <rect x="44" y="16" width="6" height="44" rx="2" fill="#B5743E" />
+                <rect x="27" y="18" width="6" height="36" rx="2" fill="#9E6030" />
+                <ellipse cx="30" cy="14" rx="26" ry="9" fill="#C98850" />
+                <ellipse cx="30" cy="12" rx="24" ry="7" fill="#D89A63" />
+              </g>
+
+              <!-- 목수 캐릭터 -->
+              <g transform="translate(46, 16)">
+                <!-- 다리 & 신발 -->
+                <path d="M 36 108 L 16 122 C 10 126, 12 135, 22 135 L 62 135 L 64 114 Z" fill="#2D1E26" />
+                <path d="M 14 132 L 46 132 L 46 137 L 12 137 Z" fill="#FAF3E3" />
+                <path d="M 88 106 L 126 116 L 138 134 L 112 136 L 84 118 Z" fill="#2D1E26" />
+                <!-- 운동화 -->
+                <path d="M 122 114 L 146 128 C 150 131, 148 137, 141 137 L 118 137 Z" fill="#FAF3E3" />
+                <path d="M 118 134 L 147 134 L 147 138 L 118 138 Z" fill="#2D1E26" />
+
+                <!-- 상체 (크림색 셔츠) -->
+                <path d="M 48 54 C 48 44, 96 44, 96 54 L 106 108 L 42 108 Z" fill="#FAF3E3" />
+                <!-- 왼쪽 팔 -->
+                <path d="M 52 54 L 22 68 C 16 71, 18 81, 26 83 L 52 88 Z" fill="#FAF3E3" />
+                <!-- 오른쪽 팔 -->
+                <path d="M 94 54 L 124 72 C 130 76, 128 88, 120 91 L 94 94 Z" fill="#FAF3E3" />
+
+                <!-- 초록색 앞치마 -->
+                <path d="M 56 54 L 88 54 L 93 108 L 51 108 Z" fill="#2A9D68" />
+                <line x1="60" y1="47" x2="60" y2="56" stroke="#2A9D68" stroke-width="5" stroke-linecap="round" />
+                <line x1="84" y1="47" x2="84" y2="56" stroke="#2A9D68" stroke-width="5" stroke-linecap="round" />
+                <!-- 앞치마 주머니 -->
+                <rect x="64" y="74" width="16" height="13" rx="2" fill="#228256" />
+
+                <!-- 머리 -->
+                <circle cx="72" cy="30" r="17" fill="#F6C3AE" />
+                <!-- 머리카락 -->
+                <path d="M 55 28 C 54 14, 90 14, 89 28 C 86 22, 78 21, 72 24 C 66 21, 58 22, 55 28 Z" fill="#2D1E26" />
+                <circle cx="55" cy="30" r="4" fill="#F6C3AE" />
+                <!-- 눈, 볼터치, 미소 -->
+                <circle cx="67" cy="30" r="1.8" fill="#2D1E26" />
+                <circle cx="79" cy="30" r="1.8" fill="#2D1E26" />
+                <circle cx="63" cy="34" r="2.8" fill="#EE9592" opacity="0.7" />
+                <circle cx="83" cy="34" r="2.8" fill="#EE9592" opacity="0.7" />
+                <path d="M 70 35 Q 73 38 76 35" fill="none" stroke="#2D1E26" stroke-width="1.6" stroke-linecap="round" />
+              </g>
+
+              <!-- 대각선 나무 판자 -->
+              <g transform="translate(36, 38) rotate(36)">
+                <rect x="0" y="0" width="168" height="18" rx="3" fill="#D5965E" />
+                <rect x="0" y="12" width="168" height="6" rx="2" fill="#B97842" />
+                <line x1="16" y1="5" x2="68" y2="5" stroke="#B97842" stroke-width="1.5" stroke-linecap="round" />
+                <line x1="92" y1="8" x2="148" y2="8" stroke="#B97842" stroke-width="1.5" stroke-linecap="round" />
+              </g>
+
+              <!-- 손 (판자를 잡은 손) -->
+              <circle cx="66" cy="74" r="7" fill="#F6C3AE" />
+              <circle cx="144" cy="126" r="7" fill="#F6C3AE" />
+
+              <!-- 망치 (우측 하단) -->
+              <g transform="translate(186, 148) rotate(-22)">
+                <rect x="14" y="5" width="46" height="7" rx="3" fill="#B5743E" />
+                <path d="M 4 0 L 18 0 L 18 17 L 11 17 L 11 12 L 4 12 Z" fill="#CBD5E1" />
+                <path d="M 18 2 Q 25 2 27 7 L 18 7 Z" fill="#94A3B8" />
+              </g>
+            </svg>
+          </div>
+
+          <!-- 대단원 헤더: 로마숫자 V + 재료와 제조 -->
+          <div class="flex items-center gap-4 mb-6">
+            <!-- 교과서 스타일 초록 로마숫자 V -->
+            <svg viewBox="0 0 84 74" class="w-14 h-12 shrink-0" aria-hidden="true">
+              <path d="M 4 4 Q 10 13 22 13 L 78 13 L 78 21 L 14 21 Q 6 19 4 4 Z" fill="#12A863" />
+              <rect x="12" y="62" width="66" height="8" fill="#12A863" />
+              <polygon points="21,20 32,20 45,63 36,63" fill="#12A863" />
+              <polygon points="68,20 58,20 45,63 53,63" fill="#12A863" />
+            </svg>
+            <h2 class="text-2xl lg:text-[26px] font-black text-slate-800 leading-tight tracking-tight">
+              재료와<br />제조
+            </h2>
+          </div>
+
+          <!-- 소단원 목록 (클릭 시 내용정리 이동) -->
+          <ul id="desktop-list-V" class="space-y-2">
+            <!-- JS에서 동적 렌더링 -->
+          </ul>
+        </section>
+
+        <!-- =============================================================== -->
+        <!-- 카드 2 (좌측 중단): Ⅳ 기술과 발명                                -->
+        <!-- =============================================================== -->
+        <section
+          aria-label="4단원 기술과 발명"
+          style="top: 38.2%; left: 11.2%; width: 41.5%;"
+          class="absolute blob-card-iv px-9 py-10 z-10"
+        >
+          <!-- 상단 일러스트: 5권의 책 위에 팔짱 끼고 선 소녀 + 쇠사슬 자물쇠 전구 -->
+          <div class="absolute bottom-[93%] left-[5%] w-[78%] pointer-events-none">
+            <svg viewBox="0 0 300 320" class="w-full h-auto overflow-visible">
+              <!-- 둥둥 떠 있는 전구 + 쇠사슬 + 자물쇠 (좌측 상단) -->
+              <g class="anim-float" transform="translate(18, 12)">
+                <!-- 노란 전구 유리 -->
+                <path
+                  d="M 52 10 C 24 10, 6 30, 6 55 C 6 73, 18 85, 26 98 L 78 98 C 86 85, 98 73, 98 55 C 98 30, 80 10, 52 10 Z"
+                  fill="#F4E66B"
+                />
+                <!-- 전구 내부 필라멘트 -->
+                <path d="M 42 98 L 38 62 L 66 62 L 62 98" fill="none" stroke="#D8A73B" stroke-width="3.5" stroke-linejoin="round" />
+                <!-- 전구 소켓 -->
+                <rect x="24" y="98" width="56" height="9" rx="4.5" fill="#35202A" />
+                <rect x="26" y="108" width="52" height="9" rx="4.5" fill="#35202A" />
+                <path d="M 32 118 L 72 118 C 68 130, 36 130, 32 118 Z" fill="#35202A" />
+                <!-- 감겨 있는 어두운 쇠사슬 -->
+                <path
+                  d="M 8 60 Q 52 98 98 48"
+                  fill="none"
+                  stroke="#2B1C24"
+                  stroke-width="6"
+                  stroke-dasharray="2 7"
+                  stroke-linecap="round"
+                />
+                <!-- 주황색 자물쇠 -->
+                <g transform="translate(36, 78)">
+                  <path d="M 6 12 L 6 6 C 6 0, 26 0, 26 6 L 26 12" fill="none" stroke="#C87E36" stroke-width="4.5" stroke-linecap="round" />
+                  <rect x="0" y="11" width="32" height="26" rx="5" fill="#E39747" />
+                  <circle cx="16" cy="21" r="3.2" fill="#2B1C24" />
+                  <path d="M 14.5 22 L 17.5 22 L 18.5 30 L 13.5 30 Z" fill="#2B1C24" />
+                </g>
+              </g>
+
+              <!-- 책 위에 서 있는 소녀 캐릭터 -->
+              <g transform="translate(115, 62)">
+                <!-- 긴 어두운 머리카락 (뒷머리) -->
+                <path d="M 36 22 C 22 28, 22 52, 30 58 L 86 58 C 94 52, 94 28, 80 22 Z" fill="#2B1C24" />
+
+                <!-- 와이드 다크 바지 -->
+                <polygon points="38,104 58,104 50,164 26,164" fill="#36202B" />
+                <polygon points="58,104 78,104 90,164 66,164" fill="#36202B" />
+
+                <!-- 신발 -->
+                <path d="M 24 164 L 50 164 L 50 172 L 16 172 C 16 167, 20 164, 24 164 Z" fill="#2B1C24" />
+                <path d="M 66 164 L 92 164 C 96 164, 100 167, 100 172 L 66 172 Z" fill="#2B1C24" />
+
+                <!-- 상의: 크림 블라우스 + 코랄 핑크 카디건 -->
+                <path d="M 36 52 L 80 52 L 84 106 L 32 106 Z" fill="#F28D95" />
+                <polygon points="48,52 68,52 64,84 52,84" fill="#FAF3E3" />
+                <circle cx="58" cy="64" r="1.6" fill="#D4956A" />
+                <circle cx="58" cy="74" r="1.6" fill="#D4956A" />
+
+                <!-- 팔짱 낀 양팔 -->
+                <path d="M 36 54 L 18 76 C 16 82, 22 88, 30 88 L 76 88 L 76 76 L 36 76 L 44 62 Z" fill="#F28D95" />
+                <path d="M 80 54 L 98 76 C 100 82, 94 88, 86 88 L 46 88 L 46 77 L 80 77 L 72 62 Z" fill="#E87D86" />
+
+                <!-- 얼굴 -->
+                <circle cx="58" cy="34" r="16" fill="#F6C3AE" />
+                <!-- 앞머리 -->
+                <path d="M 42 32 C 42 16, 74 16, 74 32 C 70 24, 62 24, 58 28 C 54 24, 46 24, 42 32 Z" fill="#2B1C24" />
+                <!-- 눈, 볼터치, 미소 -->
+                <circle cx="52" cy="34" r="1.8" fill="#2B1C24" />
+                <circle cx="64" cy="34" r="1.8" fill="#2B1C24" />
+                <circle cx="48" cy="38" r="2.8" fill="#EE9592" opacity="0.75" />
+                <circle cx="68" cy="38" r="2.8" fill="#EE9592" opacity="0.75" />
+                <path d="M 55 39 Q 58 42 61 39" fill="none" stroke="#2B1C24" stroke-width="1.6" stroke-linecap="round" />
+              </g>
+
+              <!-- 5권의 알록달록한 책 더미 (소녀 발 아래 ~ 카드 상단) -->
+              <g transform="translate(82, 232)">
+                <!-- 1번째 (맨 위 코랄핑크 책 - 왼쪽 페이지 보임) -->
+                <rect x="6" y="0" width="136" height="17" rx="7" fill="#EE6374" />
+                <rect x="10" y="3" width="54" height="11" rx="3" fill="#FAF3E3" />
+                <line x1="14" y1="6.5" x2="48" y2="6.5" stroke="#C8B9A6" stroke-width="1.5" />
+                <line x1="14" y1="10.5" x2="42" y2="10.5" stroke="#C8B9A6" stroke-width="1.5" />
+                <circle cx="106" cy="8.5" r="2.5" fill="#FFFFFF" />
+                <circle cx="122" cy="8.5" r="2.5" fill="#FFFFFF" />
+
+                <!-- 2번째 (파란 책 - 오른쪽 페이지 보임) -->
+                <rect x="12" y="17" width="124" height="16" rx="7" fill="#6585C6" />
+                <rect x="82" y="20" width="48" height="10" rx="3" fill="#FAF3E3" />
+                <line x1="94" y1="23.5" x2="126" y2="23.5" stroke="#C8B9A6" stroke-width="1.5" />
+                <line x1="98" y1="27" x2="126" y2="27" stroke="#C8B9A6" stroke-width="1.5" />
+
+                <!-- 3번째 (보라색 책) -->
+                <rect x="4" y="33" width="138" height="16" rx="7" fill="#5B4B7A" />
+                <rect x="24" y="39" width="76" height="4" rx="2" fill="#8574A6" />
+
+                <!-- 4번째 (청록색 책 - 왼쪽 페이지 보임) -->
+                <rect x="0" y="49" width="136" height="17" rx="7" fill="#389A8A" />
+                <rect x="4" y="52" width="46" height="11" rx="3" fill="#FAF3E3" />
+                <line x1="8" y1="56" x2="36" y2="56" stroke="#C8B9A6" stroke-width="1.5" />
+                <line x1="8" y1="59.5" x2="32" y2="59.5" stroke="#C8B9A6" stroke-width="1.5" />
+                <rect x="78" y="55" width="40" height="5" rx="2.5" fill="#FFFFFF" />
+
+                <!-- 5번째 (맨 아래 주황색 책 - 왼쪽 페이지 보임) -->
+                <rect x="2" y="66" width="138" height="17" rx="7" fill="#F3A257" />
+                <rect x="6" y="69" width="52" height="11" rx="3" fill="#FAF3E3" />
+                <line x1="10" y1="73" x2="44" y2="73" stroke="#C8B9A6" stroke-width="1.5" />
+                <line x1="10" y1="76.5" x2="38" y2="76.5" stroke="#C8B9A6" stroke-width="1.5" />
+              </g>
+            </svg>
+          </div>
+
+          <!-- 대단원 헤더: 로마숫자 IV + 기술과 발명 -->
+          <div class="flex items-center gap-4 mb-6">
+            <!-- 교과서 스타일 초록 로마숫자 IV -->
+            <svg viewBox="0 0 92 74" class="w-15 h-12 shrink-0" aria-hidden="true">
+              <path d="M 4 4 Q 10 13 22 13 L 86 13 L 86 21 L 14 21 Q 6 19 4 4 Z" fill="#12A863" />
+              <rect x="12" y="62" width="74" height="8" fill="#12A863" />
+              <!-- I 획 -->
+              <rect x="20" y="20" width="11" height="43" fill="#12A863" />
+              <!-- V 획 -->
+              <polygon points="40,20 50,20 62,63 54,63" fill="#12A863" />
+              <polygon points="82,20 72,20 62,63 69,63" fill="#12A863" />
+            </svg>
+            <h2 class="text-2xl lg:text-[26px] font-black text-slate-800 leading-tight tracking-tight">
+              기술과<br />발명
+            </h2>
+          </div>
+
+          <!-- 소단원 목록 (클릭 시 내용정리 이동) -->
+          <ul id="desktop-list-IV" class="space-y-2">
+            <!-- JS에서 동적 렌더링 -->
+          </ul>
+        </section>
+
+        <!-- =============================================================== -->
+        <!-- 카드 3 (우측 하단): Ⅵ 에너지와 수송                              -->
+        <!-- =============================================================== -->
+        <section
+          aria-label="6단원 에너지와 수송"
+          style="top: 67.8%; right: 12.2%; width: 41.5%;"
+          class="absolute blob-card-vi px-9 py-10 z-10"
+        >
+          <!-- 좌측 하단 일러스트: 구름 + 지도 핀 + 빨간 센서파동 자율주행 자동차 -->
+          <div class="absolute -bottom-[6%] -left-[68%] w-[82%] pointer-events-none">
+            <svg viewBox="0 0 320 250" class="w-full h-auto overflow-visible">
+              <!-- 떠 있는 파란 구름 & 접힌 지도 + 위치핀 -->
+              <g class="anim-float" transform="translate(26, 6)">
+                <!-- 파란 구름 -->
+                <path
+                  d="M 22 48 C 10 48, 4 38, 10 28 C 12 16, 28 12, 38 20 C 48 12, 66 18, 66 32 C 74 35, 72 48, 60 48 Z"
+                  fill="#3797D8"
+                />
+                <!-- 접힌 지도 (3단) -->
+                <g transform="translate(50, 32)">
+                  <polygon points="0,4 22,0 22,42 0,46" fill="#47A887" />
+                  <polygon points="22,0 44,4 44,46 22,42" fill="#3B9675" />
+                  <polygon points="44,4 66,0 66,42 44,46" fill="#47A887" />
+                  <!-- 흰색 도로 선 -->
+                  <path d="M 0 18 L 66 24 M 22 28 L 66 12 M 34 2 L 34 44" stroke="#FFFFFF" stroke-width="4.5" fill="none" />
+                  <!-- 빨간 지도 핀 -->
+                  <g transform="translate(52, 8)">
+                    <path d="M 0 0 C -7 0, -12 5, -12 11 C -12 19, 0 28, 0 28 C 0 28, 12 19, 12 11 C 12 5, 7 0, 0 0 Z" fill="#EB5768" />
+                    <circle cx="0" cy="10" r="4" fill="#FFFFFF" />
+                  </g>
+                </g>
+              </g>
+
+              <!-- 앞쪽 빨간 센서 파동 ())) ) -->
+              <g class="anim-wave" transform="translate(18, 168)">
+                <path d="M 24 -12 Q 14 10 24 32" fill="none" stroke="#EB5768" stroke-width="5.5" stroke-linecap="round" />
+                <path d="M 13 -22 Q -2 10 13 42" fill="none" stroke="#EB5768" stroke-width="5.5" stroke-linecap="round" />
+                <path d="M 2 -32 Q -18 10 2 52" fill="none" stroke="#EB5768" stroke-width="5.5" stroke-linecap="round" />
+              </g>
+
+              <!-- 귀여운 자율주행 자동차 -->
+              <g transform="translate(58, 92)">
+                <!-- 지붕 센서(라이다) -->
+                <rect x="108" y="0" width="18" height="16" rx="3" fill="#35558C" />
+                <rect x="105" y="13" width="24" height="5" rx="2" fill="#253E6B" />
+
+                <!-- 상부 캐빈 (크림색) -->
+                <path
+                  d="M 46 68 C 52 28, 86 16, 134 16 C 176 16, 198 34, 204 68 Z"
+                  fill="#F4ECE0"
+                />
+                <!-- 창문 (민트하늘색) -->
+                <path d="M 64 62 C 68 38, 88 28, 118 28 L 118 62 Z" fill="#B4DCE0" />
+                <path d="M 126 28 L 164 28 C 180 28, 190 42, 193 62 L 126 62 Z" fill="#B4DCE0" />
+                <!-- 창문 빛반사 대각선 -->
+                <line x1="82" y1="34" x2="104" y2="56" stroke="#D8F0F2" stroke-width="4" stroke-linecap="round" />
+                <line x1="142" y1="34" x2="168" y2="58" stroke="#D8F0F2" stroke-width="4" stroke-linecap="round" />
+
+                <!-- 사이드 미러 -->
+                <path d="M 66 56 C 66 48, 82 48, 82 56 L 82 64 L 66 64 Z" fill="#9BC9CE" />
+
+                <!-- 하부 차체 (데님 블루) -->
+                <path
+                  d="M 12 94 C 12 74, 28 66, 52 66 L 198 66 C 216 66, 224 78, 224 96 L 224 114 C 224 122, 216 126, 206 126 L 26 126 C 16 126, 12 116, 12 94 Z"
+                  fill="#567CB8"
+                />
+                <!-- 전조등 -->
+                <ellipse cx="18" cy="96" rx="5" ry="9" fill="#F4ECE0" />
+                <!-- 앞 범퍼 포인트 -->
+                <rect x="6" y="106" width="12" height="14" rx="5" fill="#35558C" />
+
+                <!-- 바퀴 2개 -->
+                <g transform="translate(74, 124)">
+                  <circle cx="0" cy="0" r="24" fill="#33222B" />
+                  <circle cx="0" cy="0" r="12" fill="#CBD5E1" />
+                </g>
+                <g transform="translate(182, 124)">
+                  <circle cx="0" cy="0" r="24" fill="#33222B" />
+                  <circle cx="0" cy="0" r="12" fill="#CBD5E1" />
+                </g>
+              </g>
+            </svg>
+          </div>
+
+          <!-- 우측 일러스트: 만세하며 점프하는 노란 벌레 캐릭터 + '도착!' 말풍선 -->
+          <div class="anim-jump absolute -top-[14%] -right-[30%] w-[38%] pointer-events-none">
+            <svg viewBox="0 0 150 220" class="w-full h-auto overflow-visible">
+              <!-- '도착!' 뾰족 말풍선 -->
+              <g transform="translate(12, 4)">
+                <polygon
+                  points="14,16 34,20 48,4 62,18 84,8 82,26 104,32 86,44 96,60 74,56 64,72 52,58 32,68 34,50 10,48 26,34"
+                  fill="#395B94"
+                />
+                <text
+                  x="56"
+                  y="44"
+                  text-anchor="middle"
+                  fill="#F7D61E"
+                  font-size="18"
+                  font-weight="900"
+                  letter-spacing="-0.5"
+                >
+                  도착!
+                </text>
+              </g>
+
+              <!-- 점프하는 노란 캐릭터 -->
+              <g transform="translate(22, 76)">
+                <!-- 더듬이 -->
+                <path d="M 40 16 Q 36 4 30 4" fill="none" stroke="#2D1E26" stroke-width="2.2" stroke-linecap="round" />
+                <circle cx="30" cy="4" r="2.2" fill="#2D1E26" />
+                <path d="M 54 16 Q 58 4 64 4" fill="none" stroke="#2D1E26" stroke-width="2.2" stroke-linecap="round" />
+                <circle cx="64" cy="4" r="2.2" fill="#2D1E26" />
+
+                <!-- 왼쪽 팔 -->
+                <path d="M 24 44 L 4 28 L 0 22 M 4 28 L -2 28 M 4 28 L 4 20" fill="none" stroke="#2D1E26" stroke-width="1.8" stroke-linecap="round" />
+                <polygon points="24,40 8,28 4,34 22,48" fill="#FFFFFF" stroke="#2D1E26" stroke-width="1.5" />
+
+                <!-- 오른쪽 팔 -->
+                <path d="M 70 44 L 90 28 L 94 22 M 90 28 L 96 28 M 90 28 L 90 20" fill="none" stroke="#2D1E26" stroke-width="1.8" stroke-linecap="round" />
+                <polygon points="70,40 86,28 90,34 72,48" fill="#FFFFFF" stroke="#2D1E26" stroke-width="1.5" />
+
+                <!-- 다리 (점프 포즈) -->
+                <polygon points="34,74 16,96 4,94 6,102 22,102 42,78" fill="#FFFFFF" stroke="#2D1E26" stroke-width="1.5" stroke-linejoin="round" />
+                <polygon points="60,74 78,96 90,94 88,102 72,102 52,78" fill="#FFFFFF" stroke="#2D1E26" stroke-width="1.5" stroke-linejoin="round" />
+
+                <!-- 통통한 노란 몸통 -->
+                <ellipse cx="47" cy="46" rx="28" ry="34" fill="#F7D61E" />
+
+                <!-- 고글/안경 눈 -->
+                <rect x="33" y="24" width="13" height="10" rx="5" fill="#FFFFFF" stroke="#2D1E26" stroke-width="1.5" />
+                <rect x="48" y="24" width="13" height="10" rx="5" fill="#FFFFFF" stroke="#2D1E26" stroke-width="1.5" />
+                <circle cx="40" cy="29" r="1.6" fill="#2D1E26" />
+                <circle cx="54" cy="29" r="1.6" fill="#2D1E26" />
+
+                <!-- 놀란 기쁜 입 -->
+                <ellipse cx="47" cy="41" rx="3" ry="4" fill="#FFFFFF" stroke="#2D1E26" stroke-width="1.5" />
+              </g>
+
+              <!-- 바닥 점프 먼지 구름 -->
+              <path
+                d="M 64 196 C 58 192, 54 198, 58 202 C 54 206, 60 212, 66 208 C 72 212, 78 206, 74 202 C 78 198, 72 192, 66 196 Z"
+                fill="none"
+                stroke="#2D1E26"
+                stroke-width="1.6"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </div>
+
+          <!-- 대단원 헤더: 로마숫자 VI + 에너지와 수송 -->
+          <div class="flex items-center gap-4 mb-6">
+            <!-- 교과서 스타일 초록 로마숫자 VI -->
+            <svg viewBox="0 0 92 74" class="w-15 h-12 shrink-0" aria-hidden="true">
+              <path d="M 4 4 Q 10 13 22 13 L 86 13 L 86 21 L 14 21 Q 6 19 4 4 Z" fill="#12A863" />
+              <rect x="12" y="62" width="74" height="8" fill="#12A863" />
+              <!-- V 획 -->
+              <polygon points="18,20 28,20 40,63 32,63" fill="#12A863" />
+              <polygon points="60,20 50,20 40,63 47,63" fill="#12A863" />
+              <!-- I 획 -->
+              <rect x="67" y="20" width="11" height="43" fill="#12A863" />
+            </svg>
+            <h2 class="text-2xl lg:text-[26px] font-black text-slate-800 leading-tight tracking-tight">
+              에너지와<br />수송
+            </h2>
+          </div>
+
+          <!-- 소단원 목록 (클릭 시 내용정리 이동) -->
+          <ul id="desktop-list-VI" class="space-y-2">
+            <!-- JS에서 동적 렌더링 -->
+          </ul>
+        </section>
+
+      </div>
+    </div>
+
+    <!-- [모바일 반응형 뷰: md 미만] 작은 화면에서도 가로 스크롤 없이 아기자기한 길과 일러스트 유지 -->
+    <div class="block md:hidden px-4 pt-6 pb-14 max-w-md mx-auto relative">
+      <!-- 세로 구불구불한 하늘색 길 배경 -->
+      <div class="absolute inset-y-0 left-1/2 -translate-x-1/2 w-24 pointer-events-none z-0 overflow-hidden">
+        <svg viewBox="0 0 100 1000" preserveAspectRatio="none" class="w-full h-full">
+          <path
+            d="M 50 0 Q 85 180 50 350 T 50 700 T 50 1000"
+            fill="none"
+            stroke="#9AD7F7"
+            stroke-width="44"
+            stroke-linecap="round"
+          />
+        </svg>
+      </div>
+
+      <div class="relative z-10 space-y-12">
+        <!-- 모바일 안내 배너 -->
+        <div class="bg-white/85 backdrop-blur rounded-2xl px-4 py-3 text-center shadow-sm border border-white">
+          <p class="text-xs font-bold text-[#12A863]">교과서 단원 지도</p>
+          <p class="text-sm font-extrabold text-slate-800 mt-0.5">소단원을 누르면 내용정리로 이동해요!</p>
+        </div>
+
+        <!-- 모바일 카드 1: Ⅴ 재료와 제조 -->
+        <section class="blob-card-v px-6 py-8 relative mt-6">
+          <div class="flex items-center justify-between mb-4">
+            <div class="flex items-center gap-3">
+              <svg viewBox="0 0 84 74" class="w-11 h-10 shrink-0">
+                <path d="M 4 4 Q 10 13 22 13 L 78 13 L 78 21 L 14 21 Q 6 19 4 4 Z" fill="#12A863" />
+                <rect x="12" y="62" width="66" height="8" fill="#12A863" />
+                <polygon points="21,20 32,20 45,63 36,63" fill="#12A863" />
+                <polygon points="68,20 58,20 45,63 53,63" fill="#12A863" />
+              </svg>
+              <h2 class="text-xl font-black text-slate-800 leading-tight">재료와 제조</h2>
+            </div>
+            <span class="text-2xl" aria-hidden="true">🪚🪑</span>
+          </div>
+          <ul id="mobile-list-V" class="space-y-2"></ul>
+        </section>
+
+        <!-- 모바일 카드 2: Ⅳ 기술과 발명 -->
+        <section class="blob-card-iv px-6 py-8 relative">
+          <div class="flex items-center justify-between mb-4">
+            <div class="flex items-center gap-3">
+              <svg viewBox="0 0 92 74" class="w-12 h-10 shrink-0">
+                <path d="M 4 4 Q 10 13 22 13 L 86 13 L 86 21 L 14 21 Q 6 19 4 4 Z" fill="#12A863" />
+                <rect x="12" y="62" width="74" height="8" fill="#12A863" />
+                <rect x="20" y="20" width="11" height="43" fill="#12A863" />
+                <polygon points="40,20 50,20 62,63 54,63" fill="#12A863" />
+                <polygon points="82,20 72,20 62,63 69,63" fill="#12A863" />
+              </svg>
+              <h2 class="text-xl font-black text-slate-800 leading-tight">기술과 발명</h2>
+            </div>
+            <span class="text-2xl" aria-hidden="true">💡📚</span>
+          </div>
+          <ul id="mobile-list-IV" class="space-y-2"></ul>
+        </section>
+
+        <!-- 모바일 카드 3: Ⅵ 에너지와 수송 -->
+        <section class="blob-card-vi px-6 py-8 relative">
+          <div class="flex items-center justify-between mb-4">
+            <div class="flex items-center gap-3">
+              <svg viewBox="0 0 92 74" class="w-12 h-10 shrink-0">
+                <path d="M 4 4 Q 10 13 22 13 L 86 13 L 86 21 L 14 21 Q 6 19 4 4 Z" fill="#12A863" />
+                <rect x="12" y="62" width="74" height="8" fill="#12A863" />
+                <polygon points="18,20 28,20 40,63 32,63" fill="#12A863" />
+                <polygon points="60,20 50,20 40,63 47,63" fill="#12A863" />
+                <rect x="67" y="20" width="11" height="43" fill="#12A863" />
+              </svg>
+              <h2 class="text-xl font-black text-slate-800 leading-tight">에너지와 수송</h2>
+            </div>
+            <span class="text-2xl" aria-hidden="true">🚙🌱</span>
+          </div>
+          <ul id="mobile-list-VI" class="space-y-2"></ul>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <!-- ===================================================================== -->
+  <!-- VIEW 2: 소단원 내용정리 화면 (Sub-chapter Study Summary View)           -->
+  <!-- ===================================================================== -->
+  <section id="detail-view" class="hidden flex-1 w-full max-w-4xl mx-auto px-4 sm:px-6 py-6 sm:py-8 view-enter">
+
+    <!-- 상단 내비게이션 바 -->
+    <div class="flex flex-wrap items-center justify-between gap-3 mb-5">
+      <button
+        type="button"
+        onclick="navigateToMap()"
+        class="px-4 py-2.5 rounded-2xl bg-white hover:bg-emerald-50 text-slate-800 hover:text-[#12A863] font-bold text-sm shadow-sm border border-sky-200/80 flex items-center gap-2 transition active:scale-[0.99]"
+      >
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+        </svg>
+        <span>목차 지도로 돌아가기</span>
+      </button>
+
+      <div class="flex items-center gap-2">
+        <!-- 자동 저장 상태 표시 -->
+        <span
+          id="autosave-badge"
+          class="px-3 py-1.5 rounded-xl bg-white/80 text-emerald-700 text-xs font-bold border border-emerald-200/70 flex items-center gap-1 transition-all"
+        >
+          <span>자동 저장됨</span>
+          <span>✓</span>
+        </span>
+
+        <!-- 이전 / 다음 소단원 버튼 -->
+        <div class="flex items-center bg-white rounded-2xl p-1 shadow-sm border border-sky-200/80">
+          <button
+            type="button"
+            id="prev-sub-btn"
+            onclick="navigateAdjacentSubchapter(-1)"
+            class="px-3 py-1.5 rounded-xl text-xs sm:text-sm font-bold text-slate-700 hover:bg-sky-50 disabled:opacity-40 disabled:pointer-events-none transition"
+          >
+            ◀ 이전 소단원
+          </button>
+          <div class="w-px h-4 bg-slate-200 mx-0.5"></div>
+          <button
+            type="button"
+            id="next-sub-btn"
+            onclick="navigateAdjacentSubchapter(1)"
+            class="px-3 py-1.5 rounded-xl text-xs sm:text-sm font-bold text-slate-700 hover:bg-sky-50 disabled:opacity-40 disabled:pointer-events-none transition"
+          >
+            다음 소단원 ▶
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 소단원 타이틀 배너 -->
+    <div class="bg-white rounded-3xl p-6 sm:p-8 shadow-md border border-white mb-6 relative overflow-hidden">
+      <div class="absolute -right-8 -top-8 w-36 h-36 rounded-full bg-emerald-50 pointer-events-none"></div>
+      <div class="relative z-10 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div>
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#E8F8F0] text-[#12A863] text-xs font-extrabold mb-2.5">
+            <span id="detail-chapter-label">Ⅳ. 기술과 발명</span>
+          </div>
+          <div class="flex items-baseline gap-3">
+            <span id="detail-sub-num" class="text-3xl sm:text-4xl font-black text-[#12A863] tracking-tight">01</span>
+            <h1 id="detail-sub-title" class="text-2xl sm:text-3xl font-black text-slate-800 tracking-tight">
+              기술과 사회
+            </h1>
+          </div>
+        </div>
+
+        <div class="flex sm:flex-col items-center sm:items-end justify-between gap-2 border-t sm:border-t-0 pt-3 sm:pt-0 border-slate-100">
+          <span
+            id="detail-page-badge"
+            class="px-3.5 py-1.5 rounded-xl bg-sky-50 text-sky-800 font-extrabold text-xs sm:text-sm border border-sky-200"
+          >
+            교과서 p.128
+          </span>
+          <span id="detail-note-stats" class="text-xs font-semibold text-slate-500">
+            총 1개의 정리 카드
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 필터 바 & 새 내용 정리 추가 버튼 -->
+    <div class="flex flex-wrap items-center justify-between gap-3 mb-5">
+      <!-- 카테고리 필터 탭 -->
+      <div class="flex flex-wrap items-center gap-1.5">
+        <button
+          type="button"
+          data-filter="ALL"
+          onclick="setCategoryFilter('ALL')"
+          class="filter-pill px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition bg-slate-800 text-white shadow-sm"
+        >
+          전체
+        </button>
+        <button
+          type="button"
+          data-filter="핵심 개념"
+          onclick="setCategoryFilter('핵심 개념')"
+          class="filter-pill px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition bg-white/90 text-slate-700 hover:bg-white"
+        >
+          핵심 개념
+        </button>
+        <button
+          type="button"
+          data-filter="용어 정리"
+          onclick="setCategoryFilter('용어 정리')"
+          class="filter-pill px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition bg-white/90 text-slate-700 hover:bg-white"
+        >
+          용어 정리
+        </button>
+        <button
+          type="button"
+          data-filter="시험 포인트"
+          onclick="setCategoryFilter('시험 포인트')"
+          class="filter-pill px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition bg-white/90 text-slate-700 hover:bg-white"
+        >
+          시험 포인트
+        </button>
+        <button
+          type="button"
+          data-filter="STARRED"
+          onclick="setCategoryFilter('STARRED')"
+          class="filter-pill px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition bg-white/90 text-amber-600 hover:bg-white"
+        >
+          ★ 중요만
+        </button>
+      </div>
+
+      <!-- 새 내용 정리 추가하기 버튼 -->
+      <button
+        type="button"
+        id="toggle-add-form-btn"
+        onclick="toggleAddForm()"
+        class="px-4 py-2.5 rounded-2xl bg-[#12A863] hover:bg-[#0e8f53] text-white font-extrabold text-sm shadow-md shadow-emerald-600/20 flex items-center gap-2 transition active:scale-[0.99]"
+      >
+        <span class="text-base leading-none">+</span>
+        <span>새 내용 정리 추가하기</span>
+      </button>
+    </div>
+
+    <!-- 새 내용 정리 추가 폼 (접이식 패널) -->
+    <div
+      id="add-note-panel"
+      class="hidden bg-white rounded-3xl p-5 sm:p-7 shadow-lg border-2 border-[#12A863]/30 mb-6 view-enter"
+    >
+      <div class="flex items-center justify-between mb-4">
+        <h3 class="text-lg font-black text-slate-800 flex items-center gap-2">
+          <span class="w-2.5 h-2.5 rounded-full bg-[#12A863]"></span>
+          <span>새 내용 정리 작성</span>
+        </h3>
+        <button
+          type="button"
+          onclick="toggleAddForm(false)"
+          class="text-slate-400 hover:text-slate-600 text-sm font-bold px-2 py-1 rounded-lg"
+        >
+          닫기 ✕
+        </button>
+      </div>
+
+      <form id="add-note-form" onsubmit="handleCreateNote(event)" class="space-y-4">
+        <!-- 분류(카테고리) 선택 & 중요 표시 토글 -->
+        <div class="flex flex-wrap items-center justify-between gap-3">
+          <div class="flex flex-wrap items-center gap-2">
+            <span class="text-xs font-bold text-slate-500 mr-1">분류:</span>
+            <label class="cursor-pointer">
+              <input type="radio" name="newCategory" value="핵심 개념" checked class="peer sr-only" />
+              <span class="inline-block px-3.5 py-1.5 rounded-xl text-xs font-extrabold border border-emerald-200 bg-emerald-50/50 text-emerald-700 peer-checked:bg-emerald-600 peer-checked:text-white peer-checked:border-emerald-600 transition">
+                핵심 개념
+              </span>
+            </label>
+            <label class="cursor-pointer">
+              <input type="radio" name="newCategory" value="용어 정리" class="peer sr-only" />
+              <span class="inline-block px-3.5 py-1.5 rounded-xl text-xs font-extrabold border border-sky-200 bg-sky-50/50 text-sky-700 peer-checked:bg-sky-600 peer-checked:text-white peer-checked:border-sky-600 transition">
+                용어 정리
+              </span>
+            </label>
+            <label class="cursor-pointer">
+              <input type="radio" name="newCategory" value="시험 포인트" class="peer sr-only" />
+              <span class="inline-block px-3.5 py-1.5 rounded-xl text-xs font-extrabold border border-amber-200 bg-amber-50/50 text-amber-700 peer-checked:bg-amber-500 peer-checked:text-white peer-checked:border-amber-500 transition">
+                시험 포인트
+              </span>
+            </label>
+          </div>
+
+          <!-- 중요 표시 ★ 토글 -->
+          <label class="cursor-pointer inline-flex items-center gap-1.5 select-none">
+            <input type="checkbox" id="new-note-starred" class="peer sr-only" />
+            <span class="px-3.5 py-1.5 rounded-xl text-xs font-extrabold border border-slate-200 bg-slate-50 text-slate-500 peer-checked:bg-amber-100 peer-checked:text-amber-700 peer-checked:border-amber-300 transition">
+              ★ 중요 표시
+            </span>
+          </label>
+        </div>
+
+        <!-- 소제목 입력 -->
+        <div>
+          <label for="new-note-title" class="block text-xs font-bold text-slate-600 mb-1.5">
+            소제목 <span class="text-rose-500">*</span>
+          </label>
+          <input
+            type="text"
+            id="new-note-title"
+            required
+            placeholder="예: 기술의 의미와 특성"
+            class="w-full px-4 py-3 rounded-2xl bg-slate-50 border border-slate-200 focus:bg-white focus:border-[#12A863] focus:ring-2 focus:ring-emerald-200 outline-none text-sm sm:text-base font-bold text-slate-800 transition"
+          />
+        </div>
+
+        <!-- 내용 입력 -->
+        <div>
+          <div class="flex items-center justify-between mb-1.5">
+            <label for="new-note-content" class="block text-xs font-bold text-slate-600">
+              정리 내용 <span class="text-rose-500">*</span>
+            </label>
+            <!-- 빠른 기호 입력 도우미 -->
+            <div class="flex items-center gap-1">
+              <button
+                type="button"
+                onclick="insertHelperSymbol('new-note-content', '• ')"
+                class="px-2 py-0.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-xs font-bold text-slate-600 transition"
+                title="글머리 기호 추가"
+              >
+                • 불릿
+              </button>
+              <button
+                type="button"
+                onclick="insertHelperSymbol('new-note-content', ' → ')"
+                class="px-2 py-0.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-xs font-bold text-slate-600 transition"
+                title="화살표 추가"
+              >
+                →
+              </button>
+              <button
+                type="button"
+                onclick="insertHelperSymbol('new-note-content', '※ ')"
+                class="px-2 py-0.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-xs font-bold text-slate-600 transition"
+                title="참고 기호 추가"
+              >
+                ※ 참고
+              </button>
+            </div>
+          </div>
+          <textarea
+            id="new-note-content"
+            rows="5"
+            required
+            placeholder="핵심 내용을 줄바꿈이나 글머리 기호(•)를 활용해 자유롭게 적어보세요."
+            class="w-full px-4 py-3 rounded-2xl bg-slate-50 border border-slate-200 focus:bg-white focus:border-[#12A863] focus:ring-2 focus:ring-emerald-200 outline-none text-sm sm:text-base text-slate-700 leading-relaxed transition"
+          ></textarea>
+        </div>
+
+        <!-- 저장 / 취소 버튼 -->
+        <div class="flex items-center justify-end gap-2 pt-1">
+          <button
+            type="button"
+            onclick="toggleAddForm(false)"
+            class="px-4 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-600 font-bold text-sm transition"
+          >
+            취소
+          </button>
+          <button
+            type="submit"
+            class="px-5 py-2.5 rounded-xl bg-[#12A863] hover:bg-[#0e8f53] text-white font-extrabold text-sm shadow-sm transition"
+          >
+            정리 카드 저장하기
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <!-- 내용정리 카드 목록 컨테이너 -->
+    <div id="notes-container" class="space-y-4">
+      <!-- JS에서 동적 렌더링 -->
+    </div>
+
+    <!-- 하단 빠른 추가 유도 박스 -->
+    <div class="mt-8 bg-white/75 backdrop-blur rounded-3xl p-5 border border-white flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div class="text-center sm:text-left">
+        <p class="text-sm font-extrabold text-slate-800">수업 시간에 배운 내용을 더 추가할까요?</p>
+        <p class="text-xs text-slate-500 mt-0.5">추가한 내용은 이 기기의 브라우저에 자동으로 안전하게 저장됩니다.</p>
+      </div>
+      <button
+        type="button"
+        onclick="openAddFormAndScroll()"
+        class="px-4 py-2.5 rounded-2xl bg-white hover:bg-emerald-50 text-[#12A863] font-extrabold text-sm border border-emerald-200 shadow-sm transition shrink-0"
+      >
+        + 내용 추가하기
+      </button>
+    </div>
+  </section>
+
+  <!-- ===================================================================== -->
+  <!-- 커스텀 모달: 전체 정리 검색 모달                                      -->
+  <!-- ===================================================================== -->
+  <div
+    id="search-modal"
+    class="hidden fixed inset-0 z-50 bg-slate-900/45 backdrop-blur-xs flex items-start justify-center pt-16 sm:pt-24 px-4"
+    onclick="if(event.target === this) closeSearchModal()"
+  >
+    <div class="bg-white w-full max-w-xl rounded-3xl shadow-2xl border border-slate-100 overflow-hidden view-enter">
+      <div class="p-4 sm:p-5 border-b border-slate-100 flex items-center gap-3">
+        <svg class="w-5 h-5 text-[#12A863] shrink-0" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24">
+          <circle cx="11" cy="11" r="7"></circle>
+          <path stroke-linecap="round" d="M20 20l-3.5-3.5"></path>
+        </svg>
+        <input
+          type="text"
+          id="global-search-input"
+          oninput="renderSearchResults(this.value)"
+          placeholder="단원명, 소제목, 키워드(예: 특허권, 목재, 신재생) 검색..."
+          class="w-full text-sm sm:text-base font-semibold text-slate-800 placeholder-slate-400 outline-none"
+        />
+        <button
+          type="button"
+          onclick="closeSearchModal()"
+          class="px-2.5 py-1 rounded-xl bg-slate-100 hover:bg-slate-200 text-xs font-bold text-slate-600"
+        >
+          ESC
+        </button>
+      </div>
+      <div id="search-results-container" class="max-h-96 overflow-y-auto p-3 sm:p-4 space-y-2 bg-slate-50/70">
+        <!-- 검색 결과 렌더링 -->
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================================================================== -->
+  <!-- 커스텀 모달: 기본값 초기화 확인 모달 (alert/confirm 대체)             -->
+  <!-- ===================================================================== -->
+  <div
+    id="reset-modal"
+    class="hidden fixed inset-0 z-50 bg-slate-900/45 backdrop-blur-xs flex items-center justify-center px-4"
+    onclick="if(event.target === this) closeResetModal()"
+  >
+    <div class="bg-white w-full max-w-sm rounded-3xl p-6 shadow-2xl border border-slate-100 text-center view-enter">
+      <div class="w-12 h-12 rounded-2xl bg-rose-100 text-rose-600 flex items-center justify-center mx-auto mb-3 text-xl font-black">
+        ↺
+      </div>
+      <h3 class="text-lg font-black text-slate-800">기본값으로 초기화할까요?</h3>
+      <p class="text-sm text-slate-500 mt-1.5 leading-relaxed">
+        직접 추가하거나 수정한 모든 정리 노트가 지워지고, 처음 제공된 기본 교과서 정리 상태로 되돌아갑니다.
+      </p>
+      <div class="flex items-center gap-2.5 mt-6">
+        <button
+          type="button"
+          onclick="closeResetModal()"
+          class="flex-1 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-sm transition"
+        >
+          취소
+        </button>
+        <button
+          type="button"
+          onclick="confirmResetNotes()"
+          class="flex-1 py-2.5 rounded-xl bg-rose-600 hover:bg-rose-700 text-white font-extrabold text-sm shadow-sm transition"
+        >
+          초기화 실행
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 토스트 알림 배너 -->
+  <div
+    id="toast"
+    class="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 pointer-events-none opacity-0 translate-y-3 transition-all duration-300"
+  >
+    <div class="px-5 py-3 rounded-2xl bg-slate-800/95 text-white text-sm font-bold shadow-xl flex items-center gap-2">
+      <span id="toast-icon">✓</span>
+      <span id="toast-message">저장되었습니다.</span>
+    </div>
+  </div>
+
+  <!-- ===================================================================== -->
+  <!-- JAVASCRIPT: 교과서 단원 데이터, 로컬스토리지, CRUD 및 렌더링 로직     -->
+  <!-- ===================================================================== -->
+  <script>
+    // 로컬스토리지 저장 키
+    const STORAGE_KEY = 'tech_home_econ_1_2_notes_v1';
+
+    // 교과서 단원 및 소단원 메타데이터 (교과서 순서: IV -> V -> VI)
+    const CHAPTER_INFO = {
+      IV: { roman: 'Ⅳ', title: '기술과 발명' },
+      V:  { roman: 'Ⅴ', title: '재료와 제조' },
+      VI: { roman: 'Ⅵ', title: '에너지와 수송' }
+    };
+
+    const SUBCHAPTERS = [
+      { id: 'IV-01', chapter: 'IV', num: '01', title: '기술과 사회', page: 128 },
+      { id: 'IV-02', chapter: 'IV', num: '02', title: '기술적 문제 해결', page: 144 },
+      { id: 'IV-03', chapter: 'IV', num: '03', title: '발명과 지식 재산', page: 162 },
+      { id: 'V-01',  chapter: 'V',  num: '01', title: '재료의 종류와 활용', page: 182 },
+      { id: 'V-02',  chapter: 'V',  num: '02', title: '제품의 설계와 제작', page: 196 },
+      { id: 'VI-01', chapter: 'VI', num: '01', title: '친환경 에너지 자원', page: 216 },
+      { id: 'VI-02', chapter: 'VI', num: '02', title: '수송 수단과 물류', page: 228 }
+    ];
+
+    // 처음 실행 시 각 소단원에 기본으로 제공되는 중1 기술·가정 2학기 핵심 정리
+    const DEFAULT_NOTES = {
+      'IV-01': [
+        {
+          id: 'note-iv01-1',
+          category: '핵심 개념',
+          title: '기술의 의미, 특성 및 사회적 영향',
+          content:
+            '• 기술의 의미: 인간의 필요와 욕구를 충족시키기 위해 자원을 활용하여 대상물의 형태나 성질을 변화시키는 수단이나 활동\n' +
+            '• 기술의 특성: 실천적·창의적 활동이며, 시대와 사회의 변화에 따라 끊임없이 발달함\n' +
+            '• 5대 기술 영역: 제조 기술, 건설 기술, 수송 기술, 통신 기술, 생명 기술\n' +
+            '• 기술의 양면성: 생활의 편리함과 풍요로움을 주는 긍정적 영향과 환경 오염·사생활 침해 등 부정적 영향이 함께 나타남',
+          starred: true
+        }
+      ],
+      'IV-02': [
+        {
+          id: 'note-iv02-1',
+          category: '핵심 개념',
+          title: '기술적 문제 해결 과정과 사고 기법',
+          content:
+            '• 문제 해결 5단계: ① 문제 확인 → ② 아이디어 탐색 및 선정 → ③ 계획 → ④ 실행 → ⑤ 평가\n' +
+            '• 확산적 사고: 다양한 아이디어를 폭넓게 떠올리는 사고 (브레인스토밍, 마인드맵 등)\n' +
+            '• 수렴적 사고: 여러 아이디어 중 조건에 가장 알맞은 해결책을 고르는 사고 (평가 행렬법, PMI 기법 등)\n' +
+            '• 시제품(프로토타입) 제작을 통해 설계의 문제점을 미리 점검하고 개선할 수 있음',
+          starred: true
+        }
+      ],
+      'IV-03': [
+        {
+          id: 'note-iv03-1',
+          category: '용어 정리',
+          title: '발명의 기법과 지식 재산권의 종류',
+          content:
+            '• 발명과 발견의 차이: 발명은 기존에 없던 새로운 물건·방법을 만들어 내는 것, 발견은 이미 존재하던 자연 현상이나 사물을 찾아내는 것\n' +
+            '• 주요 발명 기법: 더하기(+), 빼기(-), 모양 바꾸기, 크게/작게 하기, 용도 바꾸기, 폐품 이용하기\n' +
+            '• 산업 재산권: 특허권(고도한 기술적 창작, 20년), 실용신안권(물품의 형상·구조 개량, 10년), 디자인권(물품의 외관 미적 창작, 20년), 상표권(상품 식별 표장, 10년·갱신 가능)\n' +
+            '• 저작권: 문학·예술·학술 등 창작물에 대해 창작자가 가지는 권리',
+          starred: false
+        }
+      ],
+      'V-01': [
+        {
+          id: 'note-v01-1',
+          category: '핵심 개념',
+          title: '목재, 금속, 플라스틱의 특성과 이용',
+          content:
+            '• 목재: 가볍고 가공하기 쉬우며 열과 전기를 잘 전달하지 않으나, 습기에 약하고 썩거나 불에 타기 쉬움 (침엽수 / 활엽수 / 가공재: 합판, MDF, 파티클보드)\n' +
+            '• 금속: 강도와 경도가 크고 열·전기 전도성이 우수하며 연성과 전성이 좋으나, 무겁고 녹이 슬기 쉬움 (철금속 / 비철금속: 알루미늄, 구리 등)\n' +
+            '• 플라스틱: 가볍고 녹슬지 않으며 전기 절연성이 뛰어나고 대량 생산이 쉬우나, 열에 약하고 자연 분해가 어려움 (열가소성 수지 / 열경화성 수지)',
+          starred: true
+        }
+      ],
+      'V-02': [
+        {
+          id: 'note-v02-1',
+          category: '시험 포인트',
+          title: '제도 규칙(도면의 선)과 제품 제작 과정',
+          content:
+            '• 구상도: 아이디어를 입체적으로 자유롭게 스케치한 그림 (등각 투상법, 사투상법 등 활용)\n' +
+            '• 제작도(정투상도): 물체를 정면·평면·우측면에서 바라본 모양을 정확한 치수와 선으로 나타낸 도면\n' +
+            '• 제도의 주요 선: 외형선(굵은 실선), 숨은선(파선), 중심선(가는 1점 쇄선), 치수선·치수 보조선(가는 실선)\n' +
+            '• 제품 제작 순서: 구상 및 설계 → 재료 준비 → 마름질 → 가공하기 → 조립하기 → 표면 처리(다듬질 및 도장) → 평가',
+          starred: true
+        }
+      ],
+      'VI-01': [
+        {
+          id: 'note-vi01-1',
+          category: '핵심 개념',
+          title: '신재생 에너지의 종류와 에너지 효율',
+          content:
+            '• 화석 연료의 한계: 석탄·석유·천연가스는 매장량이 한정되어 있고 연소 시 온실가스와 미세먼지를 배출함\n' +
+            '• 재생 에너지: 태양광, 태양열, 풍력, 수력, 해양 에너지, 지열, 바이오 에너지, 폐기물 에너지\n' +
+            '• 신에너지: 수소 에너지, 연료 전지, 석탄 액화·가스화 에너지\n' +
+            '• 에너지 절약 실천: 에너지 소비 효율 등급(1등급에 가까울수록 효율이 높음) 확인 및 대기 전력 차단',
+          starred: false
+        }
+      ],
+      'VI-02': [
+        {
+          id: 'note-vi02-1',
+          category: '시험 포인트',
+          title: '수송 기술의 영역과 미래 첨단 수송 수단',
+          content:
+            '• 수송 기술의 의미: 사람이나 물건을 한 장소에서 다른 장소로 효율적으로 이동시키는 수단이나 활동\n' +
+            '• 수송 공간에 따른 분류: 육상 수송(자동차, 고속 철도), 해상 수송(선박, 컨테이너선), 우주·항공 수송(비행기, 드론, 우주선)\n' +
+            '• 첨단 수송과 스마트 물류: 자율 주행 자동차, 도심 항공 교통(UAM), 하이퍼루프, 친환경 전기·수소 자동차, 물류 자동화 시스템',
+          starred: true
+        }
+      ]
+    };
+
+    // 애플리케이션 상태
+    let notesState = {};
+    let currentSubchapterId = null;
+    let activeCategoryFilter = 'ALL';
+    let editingNoteId = null;
+    let deletingConfirmNoteId = null;
+    let toastTimer = null;
+
+    // -----------------------------------------------------------------------
+    // 1. 로컬스토리지 로드 및 저장
+    // -----------------------------------------------------------------------
+    function loadNotesFromStorage() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (!raw) {
+          notesState = JSON.parse(JSON.stringify(DEFAULT_NOTES));
+          saveNotesToStorage(false);
+          return;
+        }
+        const parsed = JSON.parse(raw);
+        // 모든 소단원 키가 존재하도록 보정
+        notesState = {};
+        SUBCHAPTERS.forEach((sub) => {
+          notesState[sub.id] = Array.isArray(parsed[sub.id])
+            ? parsed[sub.id]
+            : JSON.parse(JSON.stringify(DEFAULT_NOTES[sub.id]));
+        });
+      } catch (err) {
+        console.error('로컬스토리지 불러오기 오류:', err);
+        notesState = JSON.parse(JSON.stringify(DEFAULT_NOTES));
+      }
+    }
+
+    function saveNotesToStorage(showBadgePulse = true) {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(notesState));
+        if (showBadgePulse) {
+          const badge = document.getElementById('autosave-badge');
+          if (badge) {
+            badge.classList.add('bg-emerald-100', 'scale-105');
+            setTimeout(() => {
+              badge.classList.remove('bg-emerald-100', 'scale-105');
+            }, 450);
+          }
+        }
+      } catch (err) {
+        console.error('로컬스토리지 저장 오류:', err);
+        showToast('브라우저 저장 공간 오류로 저장되지 않았습니다.', '⚠️');
+      }
+    }
+
+    // -----------------------------------------------------------------------
+    // 2. 목차 지도 화면 렌더링 (데스크톱 + 모바일)
+    // -----------------------------------------------------------------------
+    function renderMapLists() {
+      ['IV', 'V', 'VI'].forEach((chapKey) => {
+        const subs = SUBCHAPTERS.filter((s) => s.chapter === chapKey);
+        const desktopUl = document.getElementById(`desktop-list-${chapKey}`);
+        const mobileUl = document.getElementById(`mobile-list-${chapKey}`);
+
+        const html = subs
+          .map((sub) => {
+            const count = (notesState[sub.id] || []).length;
+            return `
+              <li>
+                <button
+                  type="button"
+                  onclick="openSubchapter('${sub.id}')"
+                  class="subchapter-btn w-full flex items-center justify-between gap-2 px-3 py-2.5 rounded-2xl text-left group focus:outline-none focus:ring-2 focus:ring-[#12A863]/40"
+                >
+                  <div class="flex items-center gap-2.5 min-w-0">
+                    <span class="text-[#12A863] font-black text-base lg:text-lg tracking-tight shrink-0">
+                      ${sub.num}
+                    </span>
+                    <span class="font-bold text-slate-800 text-[15px] lg:text-[17px] truncate group-hover:text-emerald-950">
+                      ${escapeHtml(sub.title)}
+                    </span>
+                    <span class="shrink-0 px-2 py-0.5 rounded-full bg-slate-100 group-hover:bg-white text-slate-500 group-hover:text-[#12A863] text-[11px] font-bold transition-colors">
+                      정리 ${count}개
+                    </span>
+                  </div>
+
+                  <div class="flex items-center gap-2 shrink-0">
+                    <span class="learn-hint hidden sm:inline text-[11px] font-extrabold text-[#12A863]">
+                      학습하기 →
+                    </span>
+                    <span class="text-slate-600 font-semibold text-sm lg:text-[15px] tabular-nums">
+                      ${sub.page}
+                    </span>
+                  </div>
+                </button>
+              </li>
+            `;
+          })
+          .join('');
+
+        if (desktopUl) desktopUl.innerHTML = html;
+        if (mobileUl) mobileUl.innerHTML = html;
+      });
+    }
+
+    // -----------------------------------------------------------------------
+    // 3. 화면 전환 (목차 지도 <-> 소단원 내용정리)
+    // -----------------------------------------------------------------------
+    function openSubchapter(subId) {
+      const sub = SUBCHAPTERS.find((s) => s.id === subId);
+      if (!sub) return;
+
+      currentSubchapterId = subId;
+      activeCategoryFilter = 'ALL';
+      editingNoteId = null;
+      deletingConfirmNoteId = null;
+      toggleAddForm(false);
+
+      // 뷰 전환
+      document.getElementById('map-view').classList.add('hidden');
+      const detailView = document.getElementById('detail-view');
+      detailView.classList.remove('hidden');
+      detailView.classList.remove('view-enter');
+      void detailView.offsetWidth; // 리플로우로 애니메이션 재시작
+      detailView.classList.add('view-enter');
+
+      renderDetailView();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function navigateToMap() {
+      currentSubchapterId = null;
+      editingNoteId = null;
+      deletingConfirmNoteId = null;
+
+      document.getElementById('detail-view').classList.add('hidden');
+      const mapView = document.getElementById('map-view');
+      mapView.classList.remove('hidden');
+      mapView.classList.remove('view-enter');
+      void mapView.offsetWidth;
+      mapView.classList.add('view-enter');
+
+      renderMapLists();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function navigateAdjacentSubchapter(direction) {
+      const idx = SUBCHAPTERS.findIndex((s) => s.id === currentSubchapterId);
+      if (idx === -1) return;
+      const nextIdx = idx + direction;
+      if (nextIdx >= 0 && nextIdx < SUBCHAPTERS.length) {
+        openSubchapter(SUBCHAPTERS[nextIdx].id);
+      }
+    }
+
+    // -----------------------------------------------------------------------
+    // 4. 소단원 상세 화면 & 정리 카드 렌더링
+    // -----------------------------------------------------------------------
+    function renderDetailView() {
+      const idx = SUBCHAPTERS.findIndex((s) => s.id === currentSubchapterId);
+      if (idx === -1) return;
+
+      const sub = SUBCHAPTERS[idx];
+      const chap = CHAPTER_INFO[sub.chapter];
+      const notes = notesState[sub.id] || [];
+      const starredCount = notes.filter((n) => n.starred).length;
+
+      // 상단 배너 업데이트
+      document.getElementById('detail-chapter-label').textContent = `${chap.roman}. ${chap.title}`;
+      document.getElementById('detail-sub-num').textContent = sub.num;
+      document.getElementById('detail-sub-title').textContent = sub.title;
+      document.getElementById('detail-page-badge').textContent = `교과서 p.${sub.page}`;
+      document.getElementById('detail-note-stats').textContent =
+        starredCount > 0
+          ? `총 ${notes.length}개의 정리 카드 (중요 ${starredCount}개)`
+          : `총 ${notes.length}개의 정리 카드`;
+
+      // 이전/다음 소단원 버튼 활성화 상태
+      const prevBtn = document.getElementById('prev-sub-btn');
+      const nextBtn = document.getElementById('next-sub-btn');
+      prevBtn.disabled = idx === 0;
+      nextBtn.disabled = idx === SUBCHAPTERS.length - 1;
+
+      // 필터 탭 스타일 업데이트
+      document.querySelectorAll('.filter-pill').forEach((btn) => {
+        const filterVal = btn.getAttribute('data-filter');
+        if (filterVal === activeCategoryFilter) {
+          btn.className =
+            'filter-pill px-3.5 py-2 rounded-xl text-xs sm:text-sm font-extrabold transition bg-slate-800 text-white shadow-sm';
+        } else {
+          const textColor = filterVal === 'STARRED' ? 'text-amber-600' : 'text-slate-700';
+          btn.className = `filter-pill px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition bg-white/90 ${textColor} hover:bg-white`;
+        }
+      });
+
+      renderNotesList();
+    }
+
+    function setCategoryFilter(filter) {
+      activeCategoryFilter = filter;
+      editingNoteId = null;
+      deletingConfirmNoteId = null;
+      renderDetailView();
+    }
+
+    function getCategoryBadgeStyle(category) {
+      switch (category) {
+        case '용어 정리':
+          return 'bg-sky-50 text-sky-700 border-sky-200';
+        case '시험 포인트':
+          return 'bg-amber-50 text-amber-700 border-amber-200';
+        case '핵심 개념':
+        default:
+          return 'bg-emerald-50 text-emerald-700 border-emerald-200';
+      }
+    }
+
+    // 멀티라인 텍스트를 깔끔한 HTML 줄/불릿 리스트로 변환
+    function formatNoteContentHTML(rawText) {
+      const lines = rawText.split('\n');
+      return lines
+        .map((line) => {
+          const trimmed = line.trim();
+          if (!trimmed) {
+            return '<div class="h-2.5"></div>';
+          }
+          if (trimmed.startsWith('•') || trimmed.startsWith('-')) {
+            const bulletChar = trimmed.startsWith('•') ? '•' : '-';
+            const rest = trimmed.slice(1).trim();
+            return `
+              <div class="flex items-start gap-2.5 py-0.5">
+                <span class="text-[#12A863] font-black select-none mt-0.5">${bulletChar}</span>
+                <span class="flex-1 text-slate-700">${escapeHtml(rest)}</span>
+              </div>
+            `;
+          }
+          return `<p class="py-0.5 text-slate-700">${escapeHtml(line)}</p>`;
+        })
+        .join('');
+    }
+
+    function renderNotesList() {
+      const container = document.getElementById('notes-container');
+      const allNotes = notesState[currentSubchapterId] || [];
+
+      const filteredNotes = allNotes.filter((note) => {
+        if (activeCategoryFilter === 'ALL') return true;
+        if (activeCategoryFilter === 'STARRED') return Boolean(note.starred);
+        return note.category === activeCategoryFilter;
+      });
+
+      if (filteredNotes.length === 0) {
+        container.innerHTML = `
+          <div class="bg-white/90 rounded-3xl p-10 text-center border border-white shadow-sm">
+            <div class="w-12 h-12 rounded-2xl bg-sky-50 text-sky-500 flex items-center justify-center mx-auto mb-3 text-xl">
+              📝
+            </div>
+            <p class="text-base font-extrabold text-slate-700">
+              ${allNotes.length === 0 ? '아직 작성된 내용 정리가 없습니다.' : '선택한 조건에 해당하는 정리 카드가 없습니다.'}
+            </p>
+            <p class="text-xs sm:text-sm text-slate-500 mt-1">
+              상단의 <span class="font-bold text-[#12A863]">+ 새 내용 정리 추가하기</span> 버튼을 눌러 핵심 내용을 기록해 보세요!
+            </p>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = filteredNotes
+        .map((note) => {
+          const actualIndex = allNotes.findIndex((n) => n.id === note.id);
+          const isFirst = actualIndex === 0;
+          const isLast = actualIndex === allNotes.length - 1;
+
+          // 인라인 수정 모드인 경우
+          if (editingNoteId === note.id) {
+            return `
+              <article class="bg-white rounded-3xl p-5 sm:p-6 shadow-md border-2 border-sky-400 view-enter">
+                <div class="flex items-center justify-between mb-3">
+                  <span class="text-xs font-extrabold text-sky-700 bg-sky-50 px-3 py-1 rounded-full">
+                    ✎ 정리 카드 수정 중
+                  </span>
+                </div>
+
+                <div class="space-y-3.5">
+                  <div class="flex flex-wrap items-center justify-between gap-2">
+                    <div class="flex flex-wrap items-center gap-1.5">
+                      ${['핵심 개념', '용어 정리', '시험 포인트']
+                        .map(
+                          (cat) => `
+                        <label class="cursor-pointer">
+                          <input type="radio" name="editCat-${note.id}" value="${cat}" ${note.category === cat ? 'checked' : ''} class="peer sr-only" />
+                          <span class="inline-block px-3 py-1 rounded-xl text-xs font-extrabold border border-slate-200 bg-slate-50 text-slate-600 peer-checked:bg-slate-800 peer-checked:text-white peer-checked:border-slate-800 transition">
+                            ${cat}
+                          </span>
+                        </label>
+                      `
+                        )
+                        .join('')}
+                    </div>
+
+                    <label class="cursor-pointer inline-flex items-center select-none">
+                      <input type="checkbox" id="editStar-${note.id}" ${note.starred ? 'checked' : ''} class="peer sr-only" />
+                      <span class="px-3 py-1 rounded-xl text-xs font-extrabold border border-slate-200 bg-slate-50 text-slate-500 peer-checked:bg-amber-100 peer-checked:text-amber-700 peer-checked:border-amber-300 transition">
+                        ★ 중요 표시
+                      </span>
+                    </label>
+                  </div>
+
+                  <div>
+                    <label class="block text-xs font-bold text-slate-500 mb-1">소제목</label>
+                    <input
+                      type="text"
+                      id="editTitle-${note.id}"
+                      value="${escapeAttr(note.title)}"
+                      class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 focus:bg-white focus:border-sky-500 outline-none text-sm sm:text-base font-bold text-slate-800"
+                    />
+                  </div>
+
+                  <div>
+                    <div class="flex items-center justify-between mb-1">
+                      <label class="block text-xs font-bold text-slate-500">정리 내용</label>
+                      <div class="flex items-center gap-1">
+                        <button type="button" onclick="insertHelperSymbol('editContent-${note.id}', '• ')" class="px-2 py-0.5 rounded bg-slate-100 hover:bg-slate-200 text-xs font-bold text-slate-600">• 불릿</button>
+                        <button type="button" onclick="insertHelperSymbol('editContent-${note.id}', ' → ')" class="px-2 py-0.5 rounded bg-slate-100 hover:bg-slate-200 text-xs font-bold text-slate-600">→</button>
+                      </div>
+                    </div>
+                    <textarea
+                      id="editContent-${note.id}"
+                      rows="5"
+                      class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 focus:bg-white focus:border-sky-500 outline-none text-sm sm:text-base text-slate-700 leading-relaxed"
+                    >${escapeHtml(note.content)}</textarea>
+                  </div>
+
+                  <div class="flex items-center justify-end gap-2 pt-1">
+                    <button
+                      type="button"
+                      onclick="cancelEditNote()"
+                      class="px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-600 font-bold text-xs sm:text-sm transition"
+                    >
+                      취소
+                    </button>
+                    <button
+                      type="button"
+                      onclick="saveEditedNote('${note.id}')"
+                      class="px-4 py-2 rounded-xl bg-sky-600 hover:bg-sky-700 text-white font-extrabold text-xs sm:text-sm shadow-sm transition"
+                    >
+                      수정 완료
+                    </button>
+                  </div>
+                </div>
+              </article>
+            `;
+          }
+
+          // 일반 보기 모드 카드
+          const cardBorderClass = note.starred
+            ? 'border-amber-300/90 ring-2 ring-amber-200/40'
+            : 'border-white';
+
+          return `
+            <article class="bg-white rounded-3xl p-5 sm:p-7 shadow-sm hover:shadow-md border ${cardBorderClass} transition-shadow">
+              <!-- 카드 상단 메타 바 (분류 배지 + 중요 별표 + 순서/수정/삭제 버튼) -->
+              <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
+                <div class="flex items-center gap-2">
+                  <span class="px-3 py-1 rounded-xl text-xs font-extrabold border ${getCategoryBadgeStyle(note.category)}">
+                    ${escapeHtml(note.category)}
+                  </span>
+
+                  <button
+                    type="button"
+                    onclick="toggleNoteStar('${note.id}')"
+                    class="px-2.5 py-1 rounded-xl text-xs font-extrabold transition ${
+                      note.starred
+                        ? 'bg-amber-100 text-amber-700 border border-amber-300'
+                        : 'bg-slate-50 text-slate-400 hover:text-amber-500 border border-slate-200/70'
+                    }"
+                    title="중요 표시 전환"
+                  >
+                    ${note.starred ? '★ 중요' : '☆ 중요'}
+                  </button>
+                </div>
+
+                <!-- 순서 이동 / 수정 / 삭제 컨트롤 -->
+                <div class="flex items-center gap-1">
+                  ${
+                    activeCategoryFilter === 'ALL'
+                      ? `
+                    <button
+                      type="button"
+                      onclick="moveNote('${note.id}', -1)"
+                      ${isFirst ? 'disabled' : ''}
+                      class="w-8 h-8 rounded-xl bg-slate-50 hover:bg-slate-100 text-slate-600 disabled:opacity-30 disabled:pointer-events-none text-xs font-bold flex items-center justify-center transition"
+                      title="위로 이동"
+                    >
+                      ▲
+                    </button>
+                    <button
+                      type="button"
+                      onclick="moveNote('${note.id}', 1)"
+                      ${isLast ? 'disabled' : ''}
+                      class="w-8 h-8 rounded-xl bg-slate-50 hover:bg-slate-100 text-slate-600 disabled:opacity-30 disabled:pointer-events-none text-xs font-bold flex items-center justify-center transition"
+                      title="아래로 이동"
+                    >
+                      ▼
+                    </button>
+                  `
+                      : ''
+                  }
+                  <button
+                    type="button"
+                    onclick="startEditNote('${note.id}')"
+                    class="px-3 py-1.5 rounded-xl bg-sky-50 hover:bg-sky-100 text-sky-700 text-xs font-extrabold transition"
+                  >
+                    수정
+                  </button>
+                  <button
+                    type="button"
+                    onclick="requestDeleteNote('${note.id}')"
+                    class="px-3 py-1.5 rounded-xl bg-rose-50 hover:bg-rose-100 text-rose-600 text-xs font-extrabold transition"
+                  >
+                    삭제
+                  </button>
+                </div>
+              </div>
+
+              <!-- 소제목 -->
+              <h3 class="text-lg sm:text-xl font-black text-slate-800 mb-3 leading-snug">
+                ${escapeHtml(note.title)}
+              </h3>
+
+              <!-- 본문 내용 -->
+              <div class="text-sm sm:text-[15.5px] leading-relaxed space-y-1">
+                ${formatNoteContentHTML(note.content)}
+              </div>
+
+              <!-- 인라인 삭제 확인 배너 (브라우저 confirm 대신 사용) -->
+              ${
+                deletingConfirmNoteId === note.id
+                  ? `
+                <div class="mt-4 pt-3.5 border-t border-rose-100 flex flex-wrap items-center justify-between gap-2 bg-rose-50/70 px-4 py-3 rounded-2xl">
+                  <span class="text-xs sm:text-sm font-bold text-rose-700">
+                    이 정리 카드를 정말 삭제할까요?
+                  </span>
+                  <div class="flex items-center gap-2">
+                    <button
+                      type="button"
+                      onclick="cancelDeleteNote()"
+                      class="px-3 py-1.5 rounded-xl bg-white hover:bg-slate-100 text-slate-600 text-xs font-bold border border-slate-200 transition"
+                    >
+                      취소
+                    </button>
+                    <button
+                      type="button"
+                      onclick="confirmDeleteNote('${note.id}')"
+                      class="px-3.5 py-1.5 rounded-xl bg-rose-600 hover:bg-rose-700 text-white text-xs font-extrabold transition"
+                    >
+                      삭제 확인
+                    </button>
+                  </div>
+                </div>
+              `
+                  : ''
+              }
+            </article>
+          `;
+        })
+        .join('');
+    }
+
+    // -----------------------------------------------------------------------
+    // 5. 정리 노트 추가 / 수정 / 삭제 / 순서 변경 CRUD
+    // -----------------------------------------------------------------------
+    function toggleAddForm(forceState) {
+      const panel = document.getElementById('add-note-panel');
+      const shouldShow = typeof forceState === 'boolean' ? forceState : panel.classList.contains('hidden');
+
+      if (shouldShow) {
+        panel.classList.remove('hidden');
+        editingNoteId = null;
+        deletingConfirmNoteId = null;
+        renderNotesList();
+        setTimeout(() => {
+          document.getElementById('new-note-title').focus();
+        }, 60);
+      } else {
+        panel.classList.add('hidden');
+        document.getElementById('add-note-form').reset();
+      }
+    }
+
+    function openAddFormAndScroll() {
+      toggleAddForm(true);
+      document.getElementById('add-note-panel').scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
+    function handleCreateNote(event) {
+      event.preventDefault();
+      if (!currentSubchapterId) return;
+
+      const form = event.target;
+      const category = form.querySelector('input[name="newCategory"]:checked')?.value || '핵심 개념';
+      const title = document.getElementById('new-note-title').value.trim();
+      const content = document.getElementById('new-note-content').value.trim();
+      const starred = document.getElementById('new-note-starred').checked;
+
+      if (!title || !content) {
+        showToast('소제목과 내용을 모두 입력해 주세요.', '⚠️');
+        return;
+      }
+
+      const newNote = {
+        id: 'note-' + Date.now() + '-' + Math.random().toString(36).slice(2, 6),
+        category,
+        title,
+        content,
+        starred
+      };
+
+      if (!notesState[currentSubchapterId]) {
+        notesState[currentSubchapterId] = [];
+      }
+      notesState[currentSubchapterId].push(newNote);
+
+      saveNotesToStorage(true);
+      toggleAddForm(false);
+      // 새 노트가 바로 보이도록 필터가 맞지 않으면 전체로 전환
+      if (activeCategoryFilter !== 'ALL' && activeCategoryFilter !== category && !(activeCategoryFilter === 'STARRED' && starred)) {
+        activeCategoryFilter = 'ALL';
+      }
+      renderDetailView();
+      showToast('새 내용 정리가 추가되었습니다!', '✓');
+    }
+
+    function startEditNote(noteId) {
+      toggleAddForm(false);
+      editingNoteId = noteId;
+      deletingConfirmNoteId = null;
+      renderNotesList();
+    }
+
+    function cancelEditNote() {
+      editingNoteId = null;
+      renderNotesList();
+    }
+
+    function saveEditedNote(noteId) {
+      const notes = notesState[currentSubchapterId] || [];
+      const target = notes.find((n) => n.id === noteId);
+      if (!target) return;
+
+      const selectedCat = document.querySelector(`input[name="editCat-${noteId}"]:checked`)?.value || target.category;
+      const newTitle = document.getElementById(`editTitle-${noteId}`).value.trim();
+      const newContent = document.getElementById(`editContent-${noteId}`).value.trim();
+      const newStarred = document.getElementById(`editStar-${noteId}`).checked;
+
+      if (!newTitle || !newContent) {
+        showToast('소제목과 내용을 비워둘 수 없습니다.', '⚠️');
+        return;
+      }
+
+      target.category = selectedCat;
+      target.title = newTitle;
+      target.content = newContent;
+      target.starred = newStarred;
+
+      editingNoteId = null;
+      saveNotesToStorage(true);
+      renderDetailView();
+      showToast('수정 내용이 저장되었습니다.', '✓');
+    }
+
+    function toggleNoteStar(noteId) {
+      const notes = notesState[currentSubchapterId] || [];
+      const target = notes.find((n) => n.id === noteId);
+      if (!target) return;
+
+      target.starred = !target.starred;
+      saveNotesToStorage(true);
+      renderDetailView();
+    }
+
+    function moveNote(noteId, direction) {
+      const notes = notesState[currentSubchapterId] || [];
+      const idx = notes.findIndex((n) => n.id === noteId);
+      if (idx === -1) return;
+
+      const targetIdx = idx + direction;
+      if (targetIdx < 0 || targetIdx >= notes.length) return;
+
+      const temp = notes[idx];
+      notes[idx] = notes[targetIdx];
+      notes[targetIdx] = temp;
+
+      saveNotesToStorage(true);
+      renderNotesList();
+    }
+
+    function requestDeleteNote(noteId) {
+      deletingConfirmNoteId = noteId;
+      editingNoteId = null;
+      renderNotesList();
+    }
+
+    function cancelDeleteNote() {
+      deletingConfirmNoteId = null;
+      renderNotesList();
+    }
+
+    function confirmDeleteNote(noteId) {
+      const notes = notesState[currentSubchapterId] || [];
+      notesState[currentSubchapterId] = notes.filter((n) => n.id !== noteId);
+      deletingConfirmNoteId = null;
+
+      saveNotesToStorage(true);
+      renderDetailView();
+      showToast('정리 카드가 삭제되었습니다.', '🗑️');
+    }
+
+    // 텍스트영역 커서 위치에 기호(•, →, ※) 삽입 도우미
+    function insertHelperSymbol(textareaId, symbol) {
+      const textarea = document.getElementById(textareaId);
+      if (!textarea) return;
+
+      const start = textarea.selectionStart;
+      const end = textarea.selectionEnd;
+      const value = textarea.value;
+      textarea.value = value.substring(0, start) + symbol + value.substring(end);
+      textarea.focus();
+      textarea.selectionStart = textarea.selectionEnd = start + symbol.length;
+    }
+
+    // -----------------------------------------------------------------------
+    // 6. 백업 저장(JSON), 불러오기, 초기화 및 전체 검색 모달
+    // -----------------------------------------------------------------------
+    function toggleDataMenu(forceState) {
+      const popover = document.getElementById('data-menu-popover');
+      const shouldOpen = typeof forceState === 'boolean' ? forceState : popover.classList.contains('hidden');
+      if (shouldOpen) {
+        popover.classList.remove('hidden');
+      } else {
+        popover.classList.add('hidden');
+      }
+    }
+
+    // 바깥 영역 클릭 시 데이터 메뉴 닫기
+    document.addEventListener('click', (e) => {
+      const btn = document.getElementById('data-menu-btn');
+      const popover = document.getElementById('data-menu-popover');
+      if (btn && popover && !btn.contains(e.target) && !popover.contains(e.target)) {
+        popover.classList.add('hidden');
+      }
+    });
+
+    function exportNotesJSON() {
+      try {
+        const payload = {
+          subject: '중학교 1학년 기술·가정 2학기 내용정리',
+          exportedAt: new Date().toISOString(),
+          notes: notesState
+        };
+        const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        const dateStr = new Date().toISOString().slice(0, 10);
+        a.href = url;
+        a.download = `중1_기술가정_2학기_내용정리_${dateStr}.json`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        showToast('백업 파일(JSON)이 다운로드되었습니다.', '💾');
+      } catch (err) {
+        console.error(err);
+        showToast('백업 파일 생성 중 오류가 발생했습니다.', '⚠️');
+      }
+    }
+
+    function triggerImportJSON() {
+      const input = document.getElementById('import-json-input');
+      input.value = '';
+      input.click();
+    }
+
+    function handleImportJSON(event) {
+      const file = event.target.files?.[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        try {
+          const parsed = JSON.parse(e.target.result);
+          const importedNotes = parsed.notes || parsed;
+
+          let validCount = 0;
+          SUBCHAPTERS.forEach((sub) => {
+            if (Array.isArray(importedNotes[sub.id])) {
+              notesState[sub.id] = importedNotes[sub.id].map((item, i) => ({
+                id: item.id || `imported-${sub.id}-${Date.now()}-${i}`,
+                category: ['핵심 개념', '용어 정리', '시험 포인트'].includes(item.category)
+                  ? item.category
+                  : '핵심 개념',
+                title: String(item.title || '제목 없음'),
+                content: String(item.content || ''),
+                starred: Boolean(item.starred)
+              }));
+              validCount++;
+            }
+          });
+
+          if (validCount === 0) {
+            showToast('올바른 정리 백업 파일 형식이 아닙니다.', '⚠️');
+            return;
+          }
+
+          saveNotesToStorage(true);
+          renderMapLists();
+          if (currentSubchapterId) {
+            renderDetailView();
+          }
+          showToast('백업 노트를 성공적으로 불러왔습니다!', '📂');
+        } catch (err) {
+          console.error(err);
+          showToast('JSON 파일을 읽는 중 오류가 발생했습니다.', '⚠️');
+        }
+      };
+      reader.readAsText(file);
+    }
+
+    function openResetModal() {
+      document.getElementById('reset-modal').classList.remove('hidden');
+    }
+
+    function closeResetModal() {
+      document.getElementById('reset-modal').classList.add('hidden');
+    }
+
+    function confirmResetNotes() {
+      notesState = JSON.parse(JSON.stringify(DEFAULT_NOTES));
+      saveNotesToStorage(true);
+      closeResetModal();
+      renderMapLists();
+      if (currentSubchapterId) {
+        editingNoteId = null;
+        deletingConfirmNoteId = null;
+        renderDetailView();
+      }
+      showToast('기본 교과서 정리 상태로 초기화되었습니다.', '↺');
+    }
+
+    // 전체 검색 모달 제어
+    function openSearchModal() {
+      const modal = document.getElementById('search-modal');
+      modal.classList.remove('hidden');
+      const input = document.getElementById('global-search-input');
+      input.value = '';
+      renderSearchResults('');
+      setTimeout(() => input.focus(), 50);
+    }
+
+    function closeSearchModal() {
+      document.getElementById('search-modal').classList.add('hidden');
+    }
+
+    function renderSearchResults(query) {
+      const container = document.getElementById('search-results-container');
+      const q = query.trim().toLowerCase();
+
+      const matches = [];
+      SUBCHAPTERS.forEach((sub) => {
+        const chap = CHAPTER_INFO[sub.chapter];
+        const notes = notesState[sub.id] || [];
+
+        if (!q) {
+          // 검색어가 없을 때는 각 소단원 요약 표시
+          matches.push({
+            sub,
+            chap,
+            note: notes[0] || null,
+            totalNotes: notes.length
+          });
+          return;
+        }
+
+        notes.forEach((note) => {
+          const haystack = `${sub.title} ${note.title} ${note.content} ${note.category}`.toLowerCase();
+          if (haystack.includes(q)) {
+            matches.push({
+              sub,
+              chap,
+              note,
+              totalNotes: notes.length
+            });
+          }
+        });
+      });
+
+      if (matches.length === 0) {
+        container.innerHTML = `
+          <div class="py-10 text-center text-sm text-slate-500 font-semibold">
+            '<span class="text-slate-800 font-bold">${escapeHtml(query)}</span>'에 대한 검색 결과가 없습니다.
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = matches
+        .map(
+          ({ sub, chap, note, totalNotes }) => `
+          <button
+            type="button"
+            onclick="closeSearchModal(); openSubchapter('${sub.id}')"
+            class="w-full text-left bg-white hover:bg-emerald-50/70 p-3.5 rounded-2xl border border-slate-200/80 transition flex items-start justify-between gap-3"
+          >
+            <div class="min-w-0">
+              <div class="flex items-center gap-1.5 text-xs font-extrabold text-[#12A863]">
+                <span>${chap.roman}. ${chap.title}</span>
+                <span>›</span>
+                <span>${sub.num} ${sub.title} (p.${sub.page})</span>
+              </div>
+              <p class="text-sm font-bold text-slate-800 mt-1 truncate">
+                ${note ? escapeHtml(note.title) : '정리 노트 보기'}
+              </p>
+              ${
+                note
+                  ? `<p class="text-xs text-slate-500 mt-0.5 line-clamp-1">${escapeHtml(note.content.replace(/\n/g, ' '))}</p>`
+                  : ''
+              }
+            </div>
+            <span class="shrink-0 px-2 py-0.5 rounded-lg bg-slate-100 text-slate-600 text-[11px] font-bold">
+              정리 ${totalNotes}개
+            </span>
+          </button>
+        `
+        )
+        .join('');
+    }
+
+    // ESC 키로 모달 닫기
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closeSearchModal();
+        closeResetModal();
+        toggleDataMenu(false);
+      }
+    });
+
+    // -----------------------------------------------------------------------
+    // 7. 유틸리티 함수 (토스트 알림, XSS 방지 이스케이프)
+    // -----------------------------------------------------------------------
+    function showToast(message, icon = '✓') {
+      const toast = document.getElementById('toast');
+      document.getElementById('toast-message').textContent = message;
+      document.getElementById('toast-icon').textContent = icon;
+
+      toast.classList.remove('opacity-0', 'translate-y-3');
+      toast.classList.add('opacity-100', 'translate-y-0');
+
+      if (toastTimer) clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => {
+        toast.classList.remove('opacity-100', 'translate-y-0');
+        toast.classList.add('opacity-0', 'translate-y-3');
+      }, 2400);
+    }
+
+    function escapeHtml(str) {
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }
+
+    function escapeAttr(str) {
+      return escapeHtml(str);
+    }
+
+    // 초기 실행
+    window.addEventListener('DOMContentLoaded', () => {
+      loadNotesFromStorage();
+      renderMapLists();
+    });
+  </script>
+</body>
+</html>
